@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+.scroll-hidden {
+  -ms-overflow-style: none;     
+  scrollbar-width: none;        
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;                
+}
+
+.scroll-smooth {
+  -webkit-overflow-scrolling: touch;
+  will-change: transform;
+  transform: translateZ(0);
+}
