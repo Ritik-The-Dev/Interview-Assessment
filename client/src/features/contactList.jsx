@@ -6,6 +6,7 @@ export default function ContactList({
   contacts,
   handleDeleteContact,
   isLoading,
+  loadingId
 }) {
   const handleDelete = (id) => {
     const ok = window.confirm("Are you sure you want to delete this contact?");
@@ -44,7 +45,7 @@ export default function ContactList({
         {contacts &&
           Array.isArray(contacts) &&
           contacts?.map((c) => (
-            <ContactCard {...c} key={c._id} handleDelete={handleDelete} />
+            <ContactCard {...c} key={c._id} loadingId={loadingId} handleDelete={handleDelete} />
           ))}
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import FormFields from "../components/formFields";
 import debounce from "../utils/debounce";
+import Loader from "../components/loader";
 
 const inputFormFields = [
   { id: 1, fieldName: "Name", isRequired: true, value: "name" },
@@ -11,7 +12,7 @@ const inputFormFields = [
     isRequired: true,
     type: "tel",
     value: "phone",
-    max: 10
+    max: 10,
   },
   {
     id: 4,
@@ -22,7 +23,11 @@ const inputFormFields = [
   },
 ];
 
-export default function ContactForm({ handleAddNewContact, onClose }) {
+export default function ContactForm({
+  handleAddNewContact,
+  onClose,
+  isLoading,
+}) {
   const [formData, setFormData] = useState(() => {
     return inputFormFields.reduce((acc, field) => {
       acc[field.value] = "";
@@ -96,7 +101,7 @@ export default function ContactForm({ handleAddNewContact, onClose }) {
   return (
     <div
       className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4"
-      onClick={onClose}
+      onClick={isLoading ? () => {} : onClose}
     >
       <div
         className="bg-white w-full max-w-lg rounded-xl shadow-xl p-6 space-y-5"
@@ -128,7 +133,7 @@ export default function ContactForm({ handleAddNewContact, onClose }) {
           <div className="flex gap-3 pt-2">
             <button
               type="button"
-              onClick={onClose}
+              onClick={isLoading ? () => {} :  onClose}
               className="w-full border py-2 rounded-md text-sm"
             >
               Cancel
@@ -136,13 +141,14 @@ export default function ContactForm({ handleAddNewContact, onClose }) {
             <button
               type="submit"
               disabled={!isFormValid}
-              className={`w-full text-white py-2 rounded-md text-sm transition ${
+              className={`w-full text-white flex items-center justify-center gap-2 py-2 rounded-md text-sm transition ${
                 isFormValid
                   ? "bg-blue-600 hover:bg-blue-700"
                   : "bg-blue-400 cursor-not-allowed"
               }`}
             >
-              Save
+              {isLoading ? "Saving ... " : "Save"}
+              {isLoading && <Loader size={16} color="text-white" />}
             </button>
           </div>
         </form>

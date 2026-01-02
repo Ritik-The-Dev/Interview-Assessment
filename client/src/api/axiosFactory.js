@@ -15,7 +15,7 @@ export const apiCall = async (method, url, data, showToast = true) => {
         err.response.data.success === true ||
         err.response.data.success === false
       ) {
-        showToast && toast.error(err.response.data.message);
+        showToast && err.response.data.success === false && toast.error(err.response.data.message);
         return err.response.data;
       } else {
         showToast && toast.error("No Response From Server");

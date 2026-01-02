@@ -6,33 +6,31 @@ import {
   DeleteContactApi,
   GetAllContactApi,
 } from "./api/Api";
-import toast from "react-hot-toast";
 
 export default function App() {
+
+  const [loadingId, setLoadingId] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [showAddContactForm, setShowAddContactForm] = useState(false);
   const [contactLists, setContactLists] = useState([]);
 
   const handleAddNewContact = async (payload) => {
-    const toastId = toast.loading("Adding New Contact...");
+    setIsLoading(true);
     const result = await AddNewContactApi(payload);
     if (result && result?.success) {
-      toast.success("Contact Created", { id: toastId });
       setShowAddContactForm(false);
       fetchAllContacts();
     }
-    toast.success("Failed to add Contact.", { id: toastId });
     setIsLoading(false);
   };
 
   const handleDeleteContact = async (id) => {
-    const toastId = toast.loading("Deleting contact...");
+    setLoadingId(id);
     const result = await DeleteContactApi(id);
     if (result && result?.success) {
-      toast.success("Contact deleted", { id: toastId });
       fetchAllContacts();
     }
-    toast.error("Failed to delete contact", { id: toastId });
+    setLoadingId(null);
   };
 
   const fetchAllContacts = async () => {
@@ -67,6 +65,7 @@ export default function App() {
         <ContactList
           handleDeleteContact={handleDeleteContact}
           isLoading={isLoading}
+          loadingId={loadingId}
           contacts={contactLists}
         />
 

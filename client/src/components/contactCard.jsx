@@ -1,4 +1,6 @@
-export default function ContactCard({ _id, name, email, phone, message ,handleDelete}) {
+import Loader from '../components/loader'
+
+export default function ContactCard({ _id, name, email, phone, message ,handleDelete , loadingId}) {
   return (
     <div className="bg-white rounded-lg border p-4 shadow-sm transition hover:shadow-md group">
       <div className="flex justify-between items-start">
@@ -7,7 +9,7 @@ export default function ContactCard({ _id, name, email, phone, message ,handleDe
           <p className="text-xs text-gray-500">{email}</p>
         </div>
 
-        <button
+        {loadingId === _id ? <Loader size={16} color="text-red-500" />  :<button
           onClick={() => handleDelete(_id)}
           className="
                   text-red-500 text-sm
@@ -18,7 +20,7 @@ export default function ContactCard({ _id, name, email, phone, message ,handleDe
           title="Delete contact"
         >
           🗑
-        </button>
+        </button>}
       </div>
 
       <p className="text-sm text-gray-600 mt-2">📞 {phone}</p>
