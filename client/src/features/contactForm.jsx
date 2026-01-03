@@ -47,7 +47,7 @@ export default function ContactForm({
   ).current;
 
   useEffect(() => {
-    const onEsc = (e) => e.key === "Escape" && onClose();
+    const onEsc = (e) => e.key === "Escape" && !isLoading && onClose();
     window.addEventListener("keydown", onEsc);
     return () => window.removeEventListener("keydown", onEsc);
   }, [onClose]);
@@ -88,7 +88,7 @@ export default function ContactForm({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (isLoading) return;
     const { errors, isValid } = validate(formData);
     setErrors(errors);
     setIsFormValid(isValid);
@@ -110,7 +110,7 @@ export default function ContactForm({
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-semibold">Add Contact</h2>
           <button
-            onClick={onClose}
+            onClick={isLoading ? () => {} : onClose}
             className="text-gray-400 hover:text-gray-600 text-xl"
           >
             ×
@@ -133,7 +133,7 @@ export default function ContactForm({
           <div className="flex gap-3 pt-2">
             <button
               type="button"
-              onClick={isLoading ? () => {} :  onClose}
+              onClick={isLoading ? () => {} : onClose}
               className="w-full border py-2 rounded-md text-sm"
             >
               Cancel
