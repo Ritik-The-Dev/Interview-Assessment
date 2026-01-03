@@ -20,7 +20,7 @@ export const apiCall = async (method, url, data, showToast = true, toastData) =>
 
       if (success === true || success === false) {
         if (showToast) {
-          toast.error(message || "An error occurred");
+          toast.error(message || "An error occurred", { id: toastId });
         }
 
         return err.response.data;

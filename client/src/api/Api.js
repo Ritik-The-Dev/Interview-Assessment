@@ -4,7 +4,7 @@ const BaseUrl = import.meta.env.VITE_SERVER_URL;
 
 export const GetAllContactApi = async () => {
   const apiUrl = `${BaseUrl}/api/v1/getAllContacts`;
-  const result = await apiCall("GET", apiUrl, {}, true, "Loading Contacts...");
+  const result = await apiCall("GET", apiUrl, {}, false, "Loading Contacts...");
   return result;
 };
 
